@@ -17,11 +17,11 @@ const ProductDetail = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [id]); // Stabilize the function reference by including 'id' as a dependency
+  }, [id]);
 
   useEffect(() => {
     getProduct();
-  }, [getProduct]); // Now 'getProduct' is stable and won't trigger unnecessary renders
+  }, [getProduct]);
 
   return (
     <div className="container">
@@ -33,17 +33,23 @@ const ProductDetail = () => {
         </div>
         <div className="col-md-6">
           <div className={styles.wrapper}>
-            <h5 className="card-title">{product.title}</h5>
+            <h3 className="card-title">{product.title}</h3>
             <p className="card-text">
               <span className="badge badge-secondary">{product.category?.name}</span>
             </p>
-            <p>{product.description}</p>
-            <h2>
-              <span>&#8377;</span> {product.price}
-            </h2>
-            <a href="/" className="btn btn-primary">
-              Add To Cart
-            </a>
+            <p style={{ fontSize: "1.3rem", marginBottom: "20px" }}>{product.description}</p>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <h2 style={{ margin: 0 }}>
+                <span>&#8377;</span> {product.price}
+              </h2>
+              <a href="/" className="btn btn-primary" style={{
+                  marginLeft: "auto",
+                  padding: "12px 24px", // Increased padding for a larger button
+                  fontSize: "1.2rem", // Increased font size
+                }}>
+                Add To Cart
+              </a>
+            </div>
           </div>
         </div>
       </div>

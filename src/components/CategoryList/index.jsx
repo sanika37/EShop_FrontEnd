@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import ApiClient from "../../client/ApiClient";
 import Category from "./Category";
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]);
 
   const getCategories = () => {
-    axios
-      .get("https://api.escuelajs.co/api/v1/categories")
-      .then((response) => setCategories(response.data))
+    ApiClient.get("/categories")      
+      .then((response) => {
+        console.log(response.data);
+        setCategories(response.data);
+      })
       .catch((error) => console.log(error));
   };
 

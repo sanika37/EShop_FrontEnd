@@ -1,6 +1,26 @@
 import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    if (!token) {
+      setIsLoggedIn(false);
+    } else {
+      setIsLoggedIn(true);
+    }
+  }, [isLoggedIn]);
+
+  const onLogoutHandler = () => {
+    localStorage.clear();
+    setIsLoggedIn(false);
+    navigate("/login");
+  };
+
   return (
     <nav
       className="navbar navbar-expand-lg navbar-dark bg-dark"
@@ -118,7 +138,7 @@ const Navbar = () => {
             style={{
               fontSize: '1.2rem', // Adjust font size for the button
               height: '40px', // Adjust height of the button
-              backgroundColor: 'black', 
+              backgroundColor: 'black',
               color: 'white', // Change text color to black
               border: '1px solid yellow', // Add a border
               transition: '0.3s', // Smooth transition for hover effect
@@ -130,6 +150,21 @@ const Navbar = () => {
             Search
           </button>
         </form>
+        <div className="form-inline my-2 my-lg-0">
+          {!isLoggedIn ? (
+            <Link className="btn btn-primary" to={"/login"} style={{ fontSize: '1.2rem', marginLeft: '10px' }}>
+              Login
+            </Link>
+          ) : (
+            <button
+              className="btn btn-danger"
+              onClick={onLogoutHandler}
+              style={{ fontSize: '1.2rem', marginLeft: '10px' }}
+            >
+              Logout
+            </button>
+          )}
+        </div>
       </div>
     </nav>
   );
